@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Page Title</title>
+		<title>Sounderfly</title>
+		<meta charset="utf-8">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.js"></script>
+		<style>
+			canvas {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+		</style>
 	</head>
 	<body>
 		<script>
@@ -13,7 +21,7 @@
             let mic, fft;
             
             function setup() {
-                createCanvas(W, H/*, WEBGL*/);
+                createCanvas(W, H, WEBGL);
                 
                 mic = new p5.AudioIn();
                 mic.start();
@@ -35,14 +43,14 @@
                     push();
                     for (let i = 0; i < 100; i++) {
                         translate(
-                            sin(frameCount * 0.001 + j) * 50,
-                            sin(frameCount * 0.001 + j) * 50,
+                            sin(frameCount * 0.001 + j) * 100,
+                            sin(frameCount * 0.001 + j) * 100,
                             i * 0.1
                         );
                         rotateZ(frameCount * 0.002);
                         push();
-                        //sphere(8, 6, 4);
-                        box(10)
+                        sphere(8, 6, 4);
+                        //box(10)
                         pop();
                     }
                     pop();
