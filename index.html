@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.js"></script>
+	</head>
+	<body>
+		<script>
+            const W = window.innerWidth, H = window.innerHeight;
+
+            let mic, fft;
+            
+            function setup() {
+                createCanvas(W, H/*, WEBGL*/);
+                
+                mic = new p5.AudioIn();
+                mic.start();
+                
+                fft = new p5.FFT();
+                fft.setInput(mic); 
+            }
+
+            /*function draw() {
+                background(250);
+                colorMode(HSB, 360, 100, 100, 100);
+                
+                let spectrum = fft.analyze();
+                fill(map(spectrum[99], 0, 255, 0, 270), 100, 100);
+                //noStroke();
+                rotateY(frameCount * 0.01);
+
+                for (let j = 0; j < 5; j++) {
+                    push();
+                    for (let i = 0; i < 100; i++) {
+                        translate(
+                            sin(frameCount * 0.001 + j) * 50,
+                            sin(frameCount * 0.001 + j) * 50,
+                            i * 0.1
+                        );
+                        rotateZ(frameCount * 0.002);
+                        push();
+                        //sphere(8, 6, 4);
+                        box(10)
+                        pop();
+                    }
+                    pop();
+                }
+            }*/
+            
+            function draw() {
+                background(0);
+                colorMode(HSB, 360, 100, 100, 100);
+
+                let spectrum = fft.analyze();
+
+                fill(map(spectrum[100], 0, 255, 0, 180), 100, 100);
+
+                rect(0, 0, W, H);
+                beginShape();
+                for (i = 0; i < spectrum.length; i++) {
+                    vertex(i, map(spectrum[i], 0, 255, height, 0));
+                }
+                endShape();
+                
+            }
+		</script>
+	</body>
+</html>
